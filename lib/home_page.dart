@@ -34,24 +34,24 @@ class _HomePageState extends State<HomePage> {
           body: SafeArea(
             child: Column(
               children: [
-                const Spacer(flex: 1),
+                const SizedBox(height: 10),
                 ValueListenableBuilder(
                   valueListenable: LogicPage.instance.support,
                   builder: (context, support, child) {
                     String supportline;
                     if (support.contains("Great")) {
                       supportline =
-                          "Your energy is off the charts today! Pawsome! 🐾";
+                          "Your energy is off the charts today! Pawsome! 😸";
                     } else if (support.contains("Good")) {
-                      supportline = "Keep that good energy going! 🌟";
+                      supportline = "Keep that good energy going! 😻";
                     } else if (support.contains("Okay")) {
                       supportline =
-                          "Just coasting today? I'll keep you company. 🐈";
+                          "Just coasting today? I'll keep you company. 😼";
                     } else if (support.contains("Rough")) {
                       supportline =
-                          "Sending you virtual headbutts and purrs! 🐾";
+                          "Sending you virtual headbutts and purrs! 😿";
                     } else {
-                      supportline = "How was ur day today??🥺";
+                      supportline = "How was ur day today?? 🥺";
                     }
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(24),
                         widget: Text(
                           supportline,
-                          style: TextStyle(
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight(700),
@@ -69,38 +70,49 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-                _catImageForMood(mood),
-                const Spacer(flex: 1),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Center(child: _catImageForMood(mood)),
+                  ),
+                ),
+
                 ValueListenableBuilder<String>(
                   valueListenable: LogicPage.instance.petName,
                   builder: (context, value, child) {
                     return Text(
                       value,
-                      style: TextStyle(
-                        fontSize: 50,
+                      style: const TextStyle(
+                        fontSize: 40, // Slightly reduced to ensure fit on small screens
                         color: Colors.white,
-                        fontWeight: FontWeight(700),
+                        fontWeight: FontWeight.bold,
                       ),
                     );
                   },
                 ),
+                const SizedBox(height: 8),
                 ValueListenableBuilder<String>(
                   valueListenable: LogicPage.instance.currentMood,
                   builder: (context, value, child) {
                     return GlassCard(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
                       widget: Text(
                         value,
                         style: const TextStyle(
-                          fontSize: 30,
+                          fontSize: 24,
                           color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     );
                   },
                 ),
+                const SizedBox(height: 15),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ValueListenableBuilder<bool>(
                     valueListenable: LogicPage.instance.isSleeping,
                     builder: (context, isSleeping, child) {
@@ -126,9 +138,9 @@ class _HomePageState extends State<HomePage> {
                                             content: Center(
                                               child: Text(
                                                 "Fed ${LogicPage.instance.petName.value}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight(700),
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -136,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.food_bank_outlined,
                                   color: Colors.green,
                                   size: 45,
@@ -162,9 +174,9 @@ class _HomePageState extends State<HomePage> {
                                             content: Center(
                                               child: Text(
                                                 "Put ${LogicPage.instance.petName.value} to sleep",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight(700),
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -172,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.dark_mode,
                                   color: Colors.blueGrey,
                                   size: 45,
@@ -198,9 +210,9 @@ class _HomePageState extends State<HomePage> {
                                             content: Center(
                                               child: Text(
                                                 "Played with ${LogicPage.instance.petName.value}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight(700),
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -208,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.sports_football,
                                   color: Colors.blue,
                                   size: 45,
@@ -221,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                const Spacer(flex: 5),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -233,16 +245,16 @@ class _HomePageState extends State<HomePage> {
   Widget _catImageForMood(String mood) {
     final newMood = mood.toLowerCase();
     if (newMood.contains("happy")) {
-      return Image.asset("assets/happy_cat.png", height: 350);
+      return Image.asset("assets/happy_cat.png");
     } else if (newMood.contains("hangry")) {
-      return Image.asset("assets/hangry_cat.png", height: 350);
+      return Image.asset("assets/hangry_cat.png");
     } else if (newMood.contains("sick")) {
-      return Image.asset("assets/sick_cat.png", height: 350);
+      return Image.asset("assets/sick_cat.png");
     } else if (newMood.contains("sleepy")) {
-      return Image.asset("assets/sleepy_cat.png", height: 350);
+      return Image.asset("assets/sleepy_cat.png");
     } else if (newMood.contains("sleeping")) {
-      return Image.asset("assets/sleeping_cat.png", height: 350);
+      return Image.asset("assets/sleeping_cat.png");
     }
-    return Image.asset("assets/happy_cat.png", height: 350);
+    return Image.asset("assets/happy_cat.png");
   }
 }
